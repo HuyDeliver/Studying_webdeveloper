@@ -17,6 +17,9 @@ app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
 app.use(webRoutes)
 //app.Method(Path, Handler)
 
+//test connection
+connection()
+
 app.listen(port, hostname, () => {
     console.log(`Example app listening on port ${port}`)
 })
