@@ -5,6 +5,7 @@ const port = process.env.PORT || 8888
 const hostname = process.env.HOST_NAME
 const configViewEngine = require('./src/config/viewEngine')
 const webRoutes = require('./src/router/web')
+const routerAPI = require('./src/router/api')
 const connection = require('./src/config/database')
 //config template engine
 configViewEngine(app)
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
 
 //Khai báo route
 app.use(webRoutes)
+app.use('/v1/api/', routerAPI)
     //app.Method(Path, Handler)
 
     //test connection
