@@ -6,7 +6,6 @@ const hostname = process.env.HOST_NAME
 const configViewEngine = require('./src/config/viewEngine')
 const webRoutes = require('./src/router/web')
 const connection = require('./src/config/database')
-const mongoose = require('mongoose')
 //config template engine
 configViewEngine(app)
 //phải khai báo middleware trước khi khai báo route
@@ -16,17 +15,13 @@ app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
 
 //Khai báo route
 app.use(webRoutes)
-//app.Method(Path, Handler)
+    //app.Method(Path, Handler)
 
-//test connection
-const kittySchema = new mongoose.Schema({
-    name: String
-});
-const Kitten = mongoose.model('Kitten', kittySchema);//Định nghĩa model
+    //test connection
 
-const silence = new Kitten({ name: 'HuyDeliver' }); //tạo mới đối tượng
-
-silence.save() ///hàm lưu model
+    //tạo mới đối tượng
+    // const cat = new Kitten({ name: 'HuyDeliver mongoose' });
+    // cat.save()
 
     ; (async () => {
         try {

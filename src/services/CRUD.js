@@ -6,11 +6,12 @@ const getAllUser = async () => {
 }
 
 const insertUser = async (email, name, city) => {
-    let [results, fields] = await connection.query(
-        `INSERT INTO Users (email, name, city)
-        VALUES (?, ?, ?)`,
-        [email, name, city],
-    );
+    // let [results, fields] = await connection.query(
+    //     `INSERT INTO Users (email, name, city)
+    //     VALUES (?, ?, ?)`,
+    //     [email, name, city],
+    // );
+
     return results
 }
 
