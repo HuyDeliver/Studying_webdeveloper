@@ -2,6 +2,7 @@ import React from 'react'
 import './ListToDo.scss'
 import AddToDo from './AddToDo'
 import { toast, ToastContainer } from 'react-toastify';
+import { isInaccessible } from '@testing-library/react';
 class ListToDo extends React.Component {
     state = {
         listToDo: [
@@ -14,10 +15,11 @@ class ListToDo extends React.Component {
                 title: 'study code'
             },
             {
-                id: 'todo2',
+                id: 'todo3',
                 title: 'fixing bug'
             }
-        ]
+        ],
+        editToDo: {}
     }
     AddNewToDo = (todo) => {
         this.setState({
@@ -26,8 +28,47 @@ class ListToDo extends React.Component {
 
         toast.success("wow! so easy")
     }
+
+    HandleClickDelete = (todo) => {
+        let curentToDo = this.state.listToDo
+        curentToDo = curentToDo.filter(item => item.id !== todo.id)
+        this.setState({
+            listToDo: curentToDo
+        })
+    }
+    handleEditTodo = (todo) => {
+        let { editToDo, listToDo } = this.state
+        let isEmtyToDo = Object.keys(editToDo).length === 0
+
+        if (isEmtyToDo === false && editToDo.id === todo.id) {
+            let listToDoCopy = [...listToDo]
+
+            let objIndex = listToDoCopy.findIndex((item) => item.id === todo.id)
+
+            listToDoCopy[objIndex].title = editToDo.title
+
+            this.setState({
+                listToDo: listToDoCopy,
+                editToDo: {}
+            })
+            toast.success("update success")
+            return
+        }
+
+        this.setState({
+            editToDo: todo
+        })
+    }
+    HandleOnChangeInput = (e) => {
+        let curentEdit = { ...this.state.editToDo }
+        curentEdit.title = e.target.value
+        this.setState({
+            editToDo: curentEdit
+        })
+    }
     render() {
-        let { listToDo } = this.state
+        let { listToDo, editToDo } = this.state
+        let isEmtyToDo = Object.keys(editToDo).length === 0
         return (
             <>
                 <div className='listToDo'>
@@ -39,9 +80,34 @@ class ListToDo extends React.Component {
                             listToDo.map((item, index) => {
                                 return (
                                     <div className="todo-child" key={item.id}>
-                                        <span>{index + 1} - {item.title}</span>
-                                        <button>Edit</button>
-                                        <button>Delete</button>
+                                        {isEmtyToDo === true ?
+                                            <span>{index + 1} - {item.title}</span>
+                                            :
+                                            <>
+                                                {editToDo.id === item.id ?
+                                                    <span>
+                                                        {index + 1}-<input type="text"
+                                                            onChange={(e) => this.HandleOnChangeInput(e)}
+                                                            value={editToDo.title} />
+                                                    </span>
+                                                    : <span>{index + 1} - {item.title}</span>
+                                                }
+
+                                            </>
+                                        }
+                                        <button
+                                            onClick={() => {
+                                                this.handleEditTodo(item)
+                                            }}
+                                        >{isEmtyToDo == false && editToDo.id === item.id ?
+                                            "Save" : "Edit"
+                                            }
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                this.HandleClickDelete(item)
+                                            }}
+                                        >Delete</button>
                                     </div>
                                 )
                             })
