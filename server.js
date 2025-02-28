@@ -4,9 +4,14 @@ require('dotenv').config()
 const port = process.env.PORT || 8888
 const hostname = process.env.HOST_NAME
 const configViewEngine = require('./src/config/viewEngine')
+const fileUpload = require('express-fileupload')
 const webRoutes = require('./src/router/web')
 const routerAPI = require('./src/router/api')
 const connection = require('./src/config/database')
+
+//config file upload
+app.use(fileUpload())
+
 //config template engine
 configViewEngine(app)
 //phải khai báo middleware trước khi khai báo route

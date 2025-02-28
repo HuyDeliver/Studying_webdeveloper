@@ -39,7 +39,7 @@ const PostUpdatePage = async (req, res) => {
 }
 
 const GetDeletePage = async (req, res) => {
-    const userId = await req.params.id
+    const userId = req.params.id
     await User.findByIdAndDelete(userId)
     res.redirect('/')
 }
