@@ -56,10 +56,28 @@ const postUploadsinglefile = async (req, res) => {
     }
 
     let results = await upLoadSingleFile(req.files.image)
-    console.log(">> check result", results)
 
 
-    return res.send("oke upload file")
+    return res.status(200).json({
+        errorCode: 0,
+        data: results
+    })
+}
+
+const postUploadmutiplefile = async (req, res) => {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    if (Array.isArray(req.files.image)) {
+        let result = await upLoadMultiFile(req.files.image)
+        return res.status(200).json({
+            errorCode: 0,
+            data: result
+        })
+    } else {
+        return await postUploadsinglefile(req, res)
+    }
 }
 
 module.exports = {
@@ -67,5 +85,6 @@ module.exports = {
     postCreateUserAPI,
     putUpdateUserAPI,
     deleteUserAPI,
-    postUploadsinglefile
+    postUploadsinglefile,
+    postUploadmutiplefile
 }
