@@ -3,6 +3,7 @@ import './ListToDo.scss'
 import AddToDo from './AddToDo'
 import { toast, ToastContainer } from 'react-toastify';
 import { isInaccessible } from '@testing-library/react';
+import Color from '../HOC/color';
 class ListToDo extends React.Component {
     state = {
         listToDo: [
@@ -71,6 +72,9 @@ class ListToDo extends React.Component {
         let isEmtyToDo = Object.keys(editToDo).length === 0
         return (
             <>
+                <p>
+                    Hello world with React.js (Hoi Dan IT đẹp trai)
+                </p>
                 <div className='listToDo'>
                     <AddToDo
                         AddNewToDo={this.AddNewToDo}
@@ -121,4 +125,4 @@ class ListToDo extends React.Component {
     }
 }
 
-export default ListToDo
+export default Color(ListToDo)
