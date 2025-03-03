@@ -26,5 +26,33 @@ module.exports = {
             console.log(error)
             return null
         }
-    }
+    },
+    getALlCustomer: async () => {
+        try {
+            let results = await Customer.find({})
+            return results
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    },
+    UpdateCustomer: async (id, name, email, address) => {
+        try {
+            let results = await Customer.updateOne({ _id: id }, { name: name, email: email, address: address })
+            return results
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    },
+    DeleteCustomerSV: async (id) => {
+        try {
+            let results = await Customer.deleteById({ _id: id })
+            return results
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    },
+
 }
