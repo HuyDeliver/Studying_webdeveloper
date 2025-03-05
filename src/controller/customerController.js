@@ -1,5 +1,5 @@
 const { upLoadSingleFile } = require('../services/fileService')
-const { createCustomer, createMultiCustomers, getALlCustomer, UpdateCustomer, DeleteCustomerSV } = require('../services/CustomerServices')
+const { createCustomer, createMultiCustomers, getALlCustomer, UpdateCustomer, DeleteCustomerSV, DeleteMultiCustomerSV } = require('../services/CustomerServices')
 module.exports = {
     postCreateCustomer: async (req, res) => {
         let { name, address, phone, email, description, image } = req.body
@@ -63,6 +63,14 @@ module.exports = {
         return res.status(200).json({
             EC: 0,
             data: result
+        })
+    },
+    deleteMultiCustomer: async (req, res) => {
+        let id = req.body.customerID
+        let results = await DeleteMultiCustomerSV(id)
+        return res.status(200).json({
+            EC: 0,
+            data: results
         })
     }
 }

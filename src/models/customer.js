@@ -12,7 +12,12 @@ const customerSchema = new mongoose.Schema({
     image: String,
 },
     {
-        timestamps: true
+        timestamps: true,
+        statics: {
+            findByhoidanIt(name) {
+                return this.find({ name: new RegExp(name, 'i') })
+            }
+        }
     }
 );
 

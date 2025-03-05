@@ -54,5 +54,14 @@ module.exports = {
             return null
         }
     },
+    DeleteMultiCustomerSV: async (arrId) => {
+        try {
+            let results = await Customer.delete({ _id: { $in: arrId } })
+            return results
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
 
 }
