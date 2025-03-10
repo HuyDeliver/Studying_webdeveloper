@@ -8,6 +8,7 @@ const fileUpload = require('express-fileupload')
 const webRoutes = require('./src/router/web')
 const routerAPI = require('./src/router/api')
 const connection = require('./src/config/database')
+const { MongoClient } = require('mongodb');
 
 //config file upload
 app.use(fileUpload())
@@ -32,7 +33,23 @@ app.use('/v1/api/', routerAPI)
 
     ; (async () => {
         try {
-            await connection();
+            //using mongoose
+            // await connection();
+
+            //using mongodb driver
+            const url = process.env.DB_HOST_WITH_DRIVER;
+            const client = new MongoClient(url);
+
+            const dbName = process.env.DB_NAME
+
+            await client.connect();
+            console.log('Connected successfully to server');
+            const db = client.db(dbName);
+            const collection = db.collection('customers')
+
+            // await collection.insertOne({ "name": "hoidanit" })
+            let a = await collection.findOne({ address: "hanoi" })
+            console.log(">>check collection", a)
             app.listen(port, hostname, () => {
                 console.log(`Example app listening at http://${hostname}:${port}`);
             });

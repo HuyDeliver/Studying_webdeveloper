@@ -43,7 +43,6 @@ module.exports = {
 
     },
     getFindAllCustomer: async (req, res) => {
-
         let limit = req.query.limit
         let page = req.query.page
         let name = req.query.name
